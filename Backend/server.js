@@ -5,14 +5,16 @@ const app = express();
 const PORT = 3000;
 
 const BASE_URL = "http://20.244.56.144/evaluation-service";
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN; 
 
 // Fetch all users
 const getUsers = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/users`, {
             headers: {
-                Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzNjA0NjcwLCJpYXQiOjE3NDM2MDQzNzAsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6ImVlMjM3ODIzLWMyNDItNGIxNS04NDQyLWRkODAxYzQ4MjA0YSIsInN1YiI6IjIyMDUyNTE4QGtpaXQuYWMuaW4ifSwiZW1haWwiOiIyMjA1MjUxOEBraWl0LmFjLmluIiwibmFtZSI6InRhbm5pc2Egc2luaGEiLCJyb2xsTm8iOiIyMjA1MjUxOCIsImFjY2Vzc0NvZGUiOiJud3B3cloiLCJjbGllbnRJRCI6ImVlMjM3ODIzLWMyNDItNGIxNS04NDQyLWRkODAxYzQ4MjA0YSIsImNsaWVudFNlY3JldCI6Im1BSHlBVGZHTUFodG5QUlAifQ.f-3bOX8WtNHJ2w9z38WT3T38gvo8XXd5XNnYok8VHH0"
-            }
+                Authorization: `Bearer ${ACCESS_TOKEN}`, // Use secure token storage
+                "Content-Type": "application/json"
+            }           
         });
         return response.data.users || {};
     } catch (error) {
